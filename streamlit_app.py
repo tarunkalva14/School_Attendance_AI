@@ -39,7 +39,6 @@ if os.path.exists(css_file):
 # -------------------------
 # MongoDB Atlas connection
 # -------------------------
-# Replace localhost with your Atlas URI to access anywhere
 client = MongoClient("mongodb+srv://kalvatarun7479_db_user:iJwZRXFs6LIRPyZv@cluster0.5ixiefr.mongodb.net/school_attendance")
 db = client["school_attendance"]
 collection = db["students_attendance_records"]
@@ -51,13 +50,28 @@ config_col = db["config"]
 os.makedirs("pdfs", exist_ok=True)
 
 # -------------------------
-# Sidebar - Student & Settings
+# Sidebar - Student & Settings with Icons
 # -------------------------
-st.sidebar.header("Student Information")
-student_id = st.sidebar.number_input("Student ID", min_value=1, step=1)
-student_name = st.sidebar.text_input("Student Name")
-age = st.sidebar.number_input("Student Age", min_value=1, max_value=120, step=1, value=10)
-attendance_date = st.sidebar.date_input("Attendance Date", value=dt_date.today())
+st.sidebar.markdown("""
+<div class="student-sidebar">
+    <div class="main-student-icon" title="Student Info">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Student" />
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+student_id = st.sidebar.number_input("Student ID", min_value=1, step=1, key="id_input")
+st.sidebar.markdown('<div class="field-icon" title="Student ID"><img src="https://cdn-icons-png.flaticon.com/512/1087/1087925.png" /></div>', unsafe_allow_html=True)
+
+student_name = st.sidebar.text_input("Student Name", key="name_input")
+st.sidebar.markdown('<div class="field-icon" title="Student Name"><img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" /></div>', unsafe_allow_html=True)
+
+age = st.sidebar.number_input("Student Age", min_value=1, max_value=120, step=1, value=10, key="age_input")
+st.sidebar.markdown('<div class="field-icon" title="Student Age"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910766.png" /></div>', unsafe_allow_html=True)
+
+attendance_date = st.sidebar.date_input("Attendance Date", value=dt_date.today(), key="date_input")
+st.sidebar.markdown('<div class="field-icon" title="Attendance Date"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" /></div>', unsafe_allow_html=True)
+
 st.sidebar.markdown("---")
 message = st.sidebar.text_area("Reason / Doctor Note (Optional)")
 pdf_file = st.sidebar.file_uploader("Upload Doctor Note PDF (optional)", type=["pdf"])
@@ -67,7 +81,6 @@ pdf_file = st.sidebar.file_uploader("Upload Doctor Note PDF (optional)", type=["
 # -------------------------
 status_override = st.sidebar.selectbox("Override Attendance Status (Optional)", ["Auto Detect", "Present", "Absent", "Late"])
 
-# Show PDF type selection only for Absent (or Auto Detect)
 note_type_option = None
 if status_override == "Absent" or status_override == "Auto Detect":
     note_type_option = st.sidebar.selectbox("Generate Doctor Note PDF Type", ["None", "Medical", "Family"])
@@ -141,7 +154,6 @@ with tabs[0]:
         if age < 5 or age > 16:
             st.error("This person is not considered a student. Age must be between 5 and 16 to submit attendance.")
         else:
-            # Save uploaded PDF locally if present
             pdf_path = None
             if pdf_file is not None:
                 pdf_path = os.path.join("pdfs", pdf_file.name)
@@ -153,13 +165,11 @@ with tabs[0]:
             if student_name.strip() == "":
                 st.error("Please enter student name!")
             else:
-                # Convert attendance_date to datetime.datetime
                 if isinstance(attendance_date, datetime):
                     mongo_date = attendance_date
                 else:
                     mongo_date = datetime.combine(attendance_date, datetime.min.time())
 
-                # Call chatbot_process
                 response = chatbot_process(
                     student_id,
                     mongo_date,
@@ -260,14 +270,12 @@ with tabs[3]:
         if 'age' not in df.columns:
             df['age'] = age if age else None
 
-        # Attendance Records Table
         def show_records():
             show_cols = [c for c in ["attendance_date", "status", "note", "student_name", "age"] if c in df.columns]
             st.dataframe(df[show_cols])
 
         display_analytics_panel("Attendance Records", show_records)
 
-        # Attendance Status Distribution
         def show_status_chart():
             if "status" in df.columns:
                 status_counts = df["status"].value_counts()
@@ -277,7 +285,6 @@ with tabs[3]:
 
         display_analytics_panel("Attendance Status Distribution", show_status_chart)
 
-        # Attendance Over Time
         def show_over_time():
             try:
                 if 'attendance_date' in df.columns:
