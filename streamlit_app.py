@@ -79,9 +79,14 @@ student_id = sidebar_field(
     min_value=1, step=1, key="id_input", help="Student ID"
 )
 # -------------------------
-# AUTO-FETCH STUDENT INFO FROM MONGODB
+# AUTO-FETCH STUDENT INFO FROM MONGODB (Fixed)
 # -------------------------
-if student_id:
+if "last_student_id" not in st.session_state:
+    st.session_state["last_student_id"] = None
+
+if st.session_state["last_student_id"] != student_id:
+    st.session_state["last_student_id"] = student_id
+
     latest_record = collection.find_one(
         {"student_id": student_id},
         sort=[("attendance_date", -1)]
@@ -94,13 +99,19 @@ if student_id:
         db_date = latest_record.get("attendance_date")
         if isinstance(db_date, datetime):
             st.session_state["date_input"] = db_date.date()
+    else:
+        st.session_state["name_input"] = ""
+        st.session_state["age_input"] = 10
+        st.session_state["date_input"] = dt_date.today()
 
 # Student Name
 student_name = sidebar_field(
     "https://cdn-icons-png.flaticon.com/512/747/747376.png",
     "Student Name",
     st.text_input,
-    key="name_input", help="Student Name"
+    key="name_input", 
+    value=st.session_state.get("name_input", ""),
+    help="Student Name"
 )
 
 # Age
@@ -108,7 +119,10 @@ age = sidebar_field(
     "https://cdn-icons-png.flaticon.com/512/2910/2910766.png",
     "Student Age",
     st.number_input,
-    min_value=1, max_value=120, step=1, value=10, key="age_input", help="Student Age"
+    min_value=1, max_value=120, step=1,
+    key="age_input",
+    value=st.session_state.get("age_input", 10),
+    help="Student Age"
 )
 
 # Attendance Date
@@ -116,8 +130,9 @@ attendance_date = sidebar_field(
     "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
     "Attendance Date",
     st.date_input,
-    value=st.session_state.get("date_input", dt_date.today()), 
-    key="date_input", help="Attendance Date"
+    key="date_input",
+    value=st.session_state.get("date_input", dt_date.today()),
+    help="Attendance Date"
 )
 
 # Reason / Doctor Note
