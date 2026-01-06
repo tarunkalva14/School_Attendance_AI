@@ -52,8 +52,9 @@ html, body, [class*="css"]  {
     border-radius: 12px;
     border: 1px solid #dcdde1;
     padding: 10px 14px;
-    width: 100%;
+    width: calc(100% - 50px); /* leave space for icon */
     transition: 0.3s ease all;
+    margin-left: 50px; /* space for the icon */
 }
 .sidebar .sidebar-content .stTextInput input:focus,
 .sidebar .sidebar-content .stNumberInput input:focus,
@@ -230,4 +231,74 @@ textarea {
     font-size: 14px;
     line-height: 1.6;
     white-space: pre-wrap;
+}
+
+/* -------------------------
+   Sidebar Icons - Advanced Layout
+------------------------- */
+.student-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.main-student-icon img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    box-shadow: 0 8px 25px rgba(0, 168, 255, 0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.main-student-icon img:hover {
+    transform: scale(1.15);
+    box-shadow: 0 12px 35px rgba(0, 168, 255, 0.9);
+    cursor: pointer;
+}
+
+/* Icon + Input field container */
+.field-icon-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.field-icon-container input,
+.field-icon-container select,
+.field-icon-container textarea {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.field-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.field-icon:hover {
+    transform: scale(1.2);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+    cursor: pointer;
+}
+
+/* Tooltip effect */
+.field-icon[title]:hover::after,
+.main-student-icon[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 9999;
 }
