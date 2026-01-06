@@ -78,6 +78,22 @@ student_id = sidebar_field(
     st.number_input,
     min_value=1, step=1, key="id_input", help="Student ID"
 )
+# -------------------------
+# AUTO-FETCH STUDENT INFO FROM MONGODB
+# -------------------------
+if student_id:
+    latest_record = collection.find_one(
+        {"student_id": student_id},
+        sort=[("attendance_date", -1)]
+    )
+
+    if latest_record:
+        st.session_state["name_input"] = latest_record.get("student_name", "")
+        st.session_state["age_input"] = latest_record.get("age", 10)
+
+        db_date = latest_record.get("attendance_date")
+        if isinstance(db_date, datetime):
+            st.session_state["date_input"] = db_date.date()
 
 # Student Name
 student_name = sidebar_field(
@@ -100,7 +116,8 @@ attendance_date = sidebar_field(
     "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
     "Attendance Date",
     st.date_input,
-    value=dt_date.today(), key="date_input", help="Attendance Date"
+    value=st.session_state.get("date_input", dt_date.today()), 
+    key="date_input", help="Attendance Date"
 )
 
 # Reason / Doctor Note
