@@ -1,7 +1,7 @@
 /* -------------------------
-   General body and fonts
+   General Body & Fonts
 ------------------------- */
-html, body, [class*="css"]  {
+html, body, [class*="css"] {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f6fa;
     color: #333333;
@@ -31,9 +31,9 @@ html, body, [class*="css"]  {
 ------------------------- */
 .sidebar .sidebar-content {
     background: linear-gradient(180deg, #2f3640, #353b48);
-    color: #ffffff;
+    border-radius: 15px;
     padding: 25px;
-    border-radius: 12px;
+    color: white;
     box-shadow: 0px 6px 20px rgba(0,0,0,0.25);
     transition: all 0.3s ease;
 }
@@ -44,25 +44,68 @@ html, body, [class*="css"]  {
     color: #ffffff;
 }
 
-.sidebar .sidebar-content .stTextInput input,
-.sidebar .sidebar-content .stNumberInput input,
-.sidebar .sidebar-content .stTextArea textarea,
-.sidebar .sidebar-content .stFileUploader input {
-    border-radius: 12px;
-    border: 1px solid #dcdde1;
-    padding: 10px 14px;
-    width: 100%;
-    transition: 0.3s ease all;
+/* -------------------------
+   Main Student Icon
+------------------------- */
+.sidebar img[src*='3135715.png'] {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 20px auto;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
-.sidebar .sidebar-content .stTextInput input:focus,
-.sidebar .sidebar-content .stNumberInput input:focus,
-.sidebar .sidebar-content .stTextArea textarea:focus {
+.sidebar img[src*='3135715.png']:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 25px #00a8ff;
+}
+
+/* -------------------------
+   Field Icons
+------------------------- */
+.sidebar img[src*='1087/1087925.png'],
+.sidebar img[src*='747/747376.png'],
+.sidebar img[src*='2910/2910766.png'],
+.sidebar img[src*='2921/2921222.png'] {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.sidebar img[src*='1087/1087925.png']:hover,
+.sidebar img[src*='747/747376.png']:hover,
+.sidebar img[src*='2910/2910766.png']:hover,
+.sidebar img[src*='2921/2921222.png']:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 12px #00a8ff;
+}
+
+/* -------------------------
+   Input Fields & Textareas
+------------------------- */
+.sidebar .stNumberInput input,
+.sidebar .stTextInput input,
+.sidebar .stTextArea textarea,
+.sidebar .stDateInput input,
+.sidebar .stFileUploader input {
+    border-radius: 12px;
+    padding: 8px 12px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+.sidebar .stNumberInput input:focus,
+.sidebar .stTextInput input:focus,
+.sidebar .stTextArea textarea:focus,
+.sidebar .stDateInput input:focus {
     border-color: #00a8ff;
     box-shadow: 0 0 8px rgba(0,168,255,0.5);
 }
 
-/* Sidebar Buttons */
-.sidebar .sidebar-content .stButton>button {
+/* -------------------------
+   Sidebar Buttons
+------------------------- */
+.sidebar .stButton>button {
     background: linear-gradient(135deg, #00a8ff, #0097e6);
     color: white;
     border-radius: 12px;
@@ -72,7 +115,7 @@ html, body, [class*="css"]  {
     transition: all 0.3s ease;
     box-shadow: 0px 6px 15px rgba(0,0,0,0.2);
 }
-.sidebar .sidebar-content .stButton>button:hover {
+.sidebar .stButton>button:hover {
     background: linear-gradient(135deg, #0097e6, #00a8ff);
     transform: scale(1.06);
     cursor: pointer;
@@ -127,13 +170,11 @@ html, body, [class*="css"]  {
     border-radius: 12px;
     padding: 10px;
 }
-
 .stDataFrame th {
     background: linear-gradient(135deg, #00a8ff, #0097e6) !important;
     color: white !important;
     font-weight: bold;
 }
-
 .stDataFrame td {
     padding: 10px;
     font-size: 14px;
@@ -154,13 +195,6 @@ html, body, [class*="css"]  {
     border-radius: 12px;
     padding: 14px 20px;
     box-shadow: 0px 6px 15px rgba(0,0,0,0.15);
-}
-
-/* -------------------------
-   Miscellaneous
-------------------------- */
-textarea {
-    border-radius: 12px;
 }
 
 /* -------------------------
@@ -240,7 +274,6 @@ textarea {
     align-items: center;
     margin-bottom: 25px;
 }
-
 .main-student-icon {
     width: 120px;
     height: 120px;
@@ -259,14 +292,12 @@ textarea {
     box-shadow: 0 0 25px #00a8ff;
     cursor: pointer;
 }
-
 .field-icon-container {
     display: flex;
     align-items: center;
     margin-bottom: 12px;
     width: 100%;
 }
-
 .field-icon-container img {
     width: 30px;
     height: 30px;
@@ -278,7 +309,6 @@ textarea {
     box-shadow: 0 0 12px #00a8ff;
     cursor: pointer;
 }
-
 .field-icon-container input,
 .field-icon-container .stTextArea textarea,
 .field-icon-container .stDateInput input {
