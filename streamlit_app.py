@@ -246,7 +246,7 @@ with tabs[0]:
                     mongo_date,
                     message,
                     pdf_path,
-                    student_name=student_name,
+                    student_name=st.session_state.get("name_input", ""),
                     age=age,
                     status_override=(None if status_override == "Auto Detect" else status_override)
                 )
@@ -277,7 +277,7 @@ with tabs[1]:
 
             try:
                 with st.spinner("AI is processing your question..."):
-                    answer = get_attendance_answer(student_id, question, pdf_path=pdf_path2, student_name=student_name)
+                    answer = get_attendance_answer(student_id, question, pdf_path=pdf_path2, student_name=st.session_state.get("name_input", ""))
                 display_ai_card(answer)
             except Exception as e:
                 st.error(f"AI processing failed: {str(e)}")
