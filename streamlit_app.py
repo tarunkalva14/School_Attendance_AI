@@ -57,24 +57,37 @@ st.sidebar.markdown("""
     <div class="main-student-icon" title="Student Info">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Student" />
     </div>
+
+    <div class="field-icon-container" title="Student ID">
+        <img src="https://cdn-icons-png.flaticon.com/512/1087/1087925.png" />
+        student_id = st.sidebar.number_input("Student ID", min_value=1, step=1, key="id_input")
+    </div>
+
+    <div class="field-icon-container" title="Student Name">
+        <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" />
+        student_name = st.sidebar.text_input("Student Name", key="name_input")
+    </div>
+
+    <div class="field-icon-container" title="Student Age">
+        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910766.png" />
+        age = st.sidebar.number_input("Student Age", min_value=1, max_value=120, step=1, value=10, key="age_input")
+    </div>
+
+    <div class="field-icon-container" title="Attendance Date">
+        <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" />
+        attendance_date = st.sidebar.date_input("Attendance Date", value=dt_date.today(), key="date_input")
+    </div>
+
+    <div class="field-icon-container">
+        message = st.sidebar.text_area("Reason / Doctor Note (Optional)")
+    </div>
+
+    <div class="field-icon-container">
+        pdf_file = st.sidebar.file_uploader("Upload Doctor Note PDF (optional)", type=["pdf"])
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
-student_id = st.sidebar.number_input("Student ID", min_value=1, step=1, key="id_input")
-st.sidebar.markdown('<div class="field-icon" title="Student ID"><img src="https://cdn-icons-png.flaticon.com/512/1087/1087925.png" /></div>', unsafe_allow_html=True)
-
-student_name = st.sidebar.text_input("Student Name", key="name_input")
-st.sidebar.markdown('<div class="field-icon" title="Student Name"><img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" /></div>', unsafe_allow_html=True)
-
-age = st.sidebar.number_input("Student Age", min_value=1, max_value=120, step=1, value=10, key="age_input")
-st.sidebar.markdown('<div class="field-icon" title="Student Age"><img src="https://cdn-icons-png.flaticon.com/512/2910/2910766.png" /></div>', unsafe_allow_html=True)
-
-attendance_date = st.sidebar.date_input("Attendance Date", value=dt_date.today(), key="date_input")
-st.sidebar.markdown('<div class="field-icon" title="Attendance Date"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" /></div>', unsafe_allow_html=True)
-
-st.sidebar.markdown("---")
-message = st.sidebar.text_area("Reason / Doctor Note (Optional)")
-pdf_file = st.sidebar.file_uploader("Upload Doctor Note PDF (optional)", type=["pdf"])
 
 # -------------------------
 # Attendance Status Override
