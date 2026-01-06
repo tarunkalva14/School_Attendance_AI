@@ -3,8 +3,10 @@ import os
 import platform
 from datetime import datetime
 from pymongo import MongoClient
-from pdf2image import convert_from_path
 import pytesseract
+from io import BytesIO
+from pdfplumber import open as pdf_open  # lightweight PDF text extraction
+import requests
 
 # ---------------------------
 # MongoDB Connection
@@ -21,23 +23,35 @@ if platform.system() == "Windows":
     pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 # ---------------------------
-# Poppler Path (Windows)
-# ---------------------------
-if platform.system() == "Windows":
-    POPPLER_PATH = r"C:\Users\MY PC\Downloads\poppler-25.11.0\bin"
-else:
-    POPPLER_PATH = None
-
-# ---------------------------
 # Function to extract text from PDF
+# Uses pdfplumber first, then falls back to pytesseract OCR if needed
 # ---------------------------
 def extract_text_from_pdf(pdf_path):
     if not pdf_path or not os.path.exists(pdf_path):
         return ""
-    images = convert_from_path(pdf_path, poppler_path=POPPLER_PATH)
+
     text_data = ""
-    for img in images:
-        text_data += pytesseract.image_to_string(img)
+    try:
+        # Try simple PDF text extraction
+        with pdf_open(pdf_path) as pdf:
+            for page in pdf.pages:
+                page_text = page.extract_text()
+                if page_text:
+                    text_data += page_text + "\n"
+    except Exception:
+        pass  # fallback to OCR
+
+    # If pdfplumber couldn't extract, fallback to OCR
+    if not text_data.strip():
+        try:
+            from pdf2image import convert_from_path
+            POPPLER_PATH = None  # cloud doesn't need a path
+            images = convert_from_path(pdf_path, poppler_path=POPPLER_PATH)
+            for img in images:
+                text_data += pytesseract.image_to_string(img) + "\n"
+        except Exception:
+            pass  # just return empty if OCR fails
+
     return text_data.strip()
 
 # ---------------------------
