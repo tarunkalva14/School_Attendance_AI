@@ -19,6 +19,15 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Hide Streamlit footer and menu
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 # -------------------------
 # Load Premium CSS
 # -------------------------
