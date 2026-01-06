@@ -52,42 +52,42 @@ os.makedirs("pdfs", exist_ok=True)
 # -------------------------
 # Sidebar - Student & Settings with Icons
 # -------------------------
-st.sidebar.markdown("""
-<div class="student-sidebar">
-    <div class="main-student-icon" title="Student Info">
-        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Student" />
-    </div>
 
-    <div class="field-icon-container" title="Student ID">
-        <img src="https://cdn-icons-png.flaticon.com/512/1087/1087925.png" />
-        student_id = st.sidebar.number_input("Student ID", min_value=1, step=1, key="id_input")
-    </div>
+st.sidebar.markdown('<h3>Student Information</h3>', unsafe_allow_html=True)
 
-    <div class="field-icon-container" title="Student Name">
-        <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" />
-        student_name = st.sidebar.text_input("Student Name", key="name_input")
-    </div>
+# Student ID
+col1, col2 = st.sidebar.columns([1, 4])
+with col1:
+    st.image("https://cdn-icons-png.flaticon.com/512/1087/1087925.png", width=30, output_format="png")
+with col2:
+    student_id = st.number_input("Student ID", min_value=1, step=1, key="id_input", help="Student ID")
 
-    <div class="field-icon-container" title="Student Age">
-        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910766.png" />
-        age = st.sidebar.number_input("Student Age", min_value=1, max_value=120, step=1, value=10, key="age_input")
-    </div>
+# Student Name
+col1, col2 = st.sidebar.columns([1, 4])
+with col1:
+    st.image("https://cdn-icons-png.flaticon.com/512/747/747376.png", width=30)
+with col2:
+    student_name = st.text_input("Student Name", key="name_input", help="Student Name")
 
-    <div class="field-icon-container" title="Attendance Date">
-        <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" />
-        attendance_date = st.sidebar.date_input("Attendance Date", value=dt_date.today(), key="date_input")
-    </div>
+# Age
+col1, col2 = st.sidebar.columns([1, 4])
+with col1:
+    st.image("https://cdn-icons-png.flaticon.com/512/2910/2910766.png", width=30)
+with col2:
+    age = st.number_input("Student Age", min_value=1, max_value=120, step=1, value=10, key="age_input", help="Student Age")
 
-    <div class="field-icon-container">
-        message = st.sidebar.text_area("Reason / Doctor Note (Optional)")
-    </div>
+# Attendance Date
+col1, col2 = st.sidebar.columns([1, 4])
+with col1:
+    st.image("https://cdn-icons-png.flaticon.com/512/2921/2921222.png", width=30)
+with col2:
+    attendance_date = st.date_input("Attendance Date", value=dt_date.today(), key="date_input", help="Attendance Date")
 
-    <div class="field-icon-container">
-        pdf_file = st.sidebar.file_uploader("Upload Doctor Note PDF (optional)", type=["pdf"])
-    </div>
-</div>
-""", unsafe_allow_html=True)
+# Reason / Doctor Note
+message = st.sidebar.text_area("Reason / Doctor Note (Optional)")
 
+# PDF Uploader
+pdf_file = st.sidebar.file_uploader("Upload Doctor Note PDF (optional)", type=["pdf"])
 
 # -------------------------
 # Attendance Status Override
