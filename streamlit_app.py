@@ -71,19 +71,23 @@ def sidebar_field(icon_url, label, widget_func, **kwargs):
     with col2:
         return widget_func(label, **kwargs)
 
-# Student ID
+# -------------------------
+# Student Info Sidebar (Perfect, Warning-Free)
+# -------------------------
+
+# Track last selected student ID to detect changes
+if "last_student_id" not in st.session_state:
+    st.session_state["last_student_id"] = None
+
+# Student ID input
 student_id = sidebar_field(
     "https://cdn-icons-png.flaticon.com/512/1087/1087925.png",
     "Student ID",
     st.number_input,
     min_value=1, step=1, key="id_input", help="Student ID"
 )
-# -------------------------
-# AUTO-FETCH STUDENT INFO FROM MONGODB (Fixed)
-# -------------------------
-if "last_student_id" not in st.session_state:
-    st.session_state["last_student_id"] = None
 
+# Fetch data from MongoDB only when Student ID changes
 if st.session_state["last_student_id"] != student_id:
     st.session_state["last_student_id"] = student_id
 
@@ -100,6 +104,7 @@ if st.session_state["last_student_id"] != student_id:
         if isinstance(db_date, datetime):
             st.session_state["date_input"] = db_date.date()
     else:
+        # Defaults if student not found
         st.session_state["name_input"] = ""
         st.session_state["age_input"] = 10
         st.session_state["date_input"] = dt_date.today()
@@ -109,7 +114,7 @@ student_name = sidebar_field(
     "https://cdn-icons-png.flaticon.com/512/747/747376.png",
     "Student Name",
     st.text_input,
-    key="name_input", 
+    key="name_input",
     value=st.session_state.get("name_input", ""),
     help="Student Name"
 )
@@ -134,6 +139,7 @@ attendance_date = sidebar_field(
     value=st.session_state.get("date_input", dt_date.today()),
     help="Attendance Date"
 )
+
 
 # Reason / Doctor Note
 message = st.sidebar.text_area("Reason / Doctor Note (Optional)")
