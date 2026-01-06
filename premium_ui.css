@@ -1,0 +1,233 @@
+/* -------------------------
+   General body and fonts
+------------------------- */
+html, body, [class*="css"]  {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f6fa;
+    color: #333333;
+    scroll-behavior: smooth;
+    transition: all 0.3s ease;
+}
+
+/* -------------------------
+   Scrollbar Styling
+------------------------- */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #f5f6fa;
+}
+::-webkit-scrollbar-thumb {
+    background: #00a8ff;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #0097e6;
+}
+
+/* -------------------------
+   Sidebar Styling
+------------------------- */
+.sidebar .sidebar-content {
+    background: linear-gradient(180deg, #2f3640, #353b48);
+    color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 20px rgba(0,0,0,0.25);
+    transition: all 0.3s ease;
+}
+
+.sidebar .sidebar-content h2,
+.sidebar .sidebar-content h3,
+.sidebar .sidebar-content h4 {
+    color: #ffffff;
+}
+
+/* Sidebar Inputs */
+.sidebar .sidebar-content .stTextInput input,
+.sidebar .sidebar-content .stNumberInput input,
+.sidebar .sidebar-content .stTextArea textarea,
+.sidebar .sidebar-content .stFileUploader input {
+    border-radius: 12px;
+    border: 1px solid #dcdde1;
+    padding: 10px 14px;
+    width: 100%;
+    transition: 0.3s ease all;
+}
+.sidebar .sidebar-content .stTextInput input:focus,
+.sidebar .sidebar-content .stNumberInput input:focus,
+.sidebar .sidebar-content .stTextArea textarea:focus {
+    border-color: #00a8ff;
+    box-shadow: 0 0 8px rgba(0,168,255,0.5);
+}
+
+/* Sidebar Buttons */
+.sidebar .sidebar-content .stButton>button {
+    background: linear-gradient(135deg, #00a8ff, #0097e6);
+    color: white;
+    border-radius: 12px;
+    padding: 0.7em 1.5em;
+    font-weight: bold;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0px 6px 15px rgba(0,0,0,0.2);
+}
+.sidebar .sidebar-content .stButton>button:hover {
+    background: linear-gradient(135deg, #0097e6, #00a8ff);
+    transform: scale(1.06);
+    cursor: pointer;
+}
+
+/* -------------------------
+   Tabs Styling
+------------------------- */
+.stTabs [role="tab"] {
+    background-color: #dcdde1;
+    border-radius: 12px 12px 0 0;
+    padding: 14px 28px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+.stTabs [role="tab"]:hover {
+    background: linear-gradient(135deg, #00a8ff, #0097e6);
+    color: white;
+    cursor: pointer;
+}
+.stTabs [role="tabpanel"] {
+    background-color: #ffffff;
+    border-radius: 0 0 12px 12px;
+    padding: 28px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* -------------------------
+   Main Buttons
+------------------------- */
+.stButton>button {
+    background: linear-gradient(135deg, #00a8ff, #0097e6);
+    color: white;
+    border-radius: 12px;
+    padding: 0.7em 1.5em;
+    font-weight: bold;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.15);
+}
+.stButton>button:hover {
+    background: linear-gradient(135deg, #0097e6, #00a8ff);
+    transform: scale(1.06);
+    cursor: pointer;
+}
+
+/* -------------------------
+   DataFrames & Tables
+------------------------- */
+.stDataFrame div.row_widget {
+    background-color: #f5f6fa;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.stDataFrame th {
+    background: linear-gradient(135deg, #00a8ff, #0097e6) !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+.stDataFrame td {
+    padding: 10px;
+    font-size: 14px;
+}
+
+/* -------------------------
+   File Uploader Styling
+------------------------- */
+.stFileUploader>div>div>input {
+    border-radius: 12px;
+    padding: 8px;
+}
+
+/* -------------------------
+   Alerts & Messages
+------------------------- */
+.stAlert {
+    border-radius: 12px;
+    padding: 14px 20px;
+    box-shadow: 0px 6px 15px rgba(0,0,0,0.15);
+}
+
+/* -------------------------
+   Miscellaneous
+------------------------- */
+textarea {
+    border-radius: 12px;
+}
+
+/* -------------------------
+   Premium Card Styles
+------------------------- */
+.ai-card {
+    background: linear-gradient(135deg, #00a8ff, #0097e6);
+    color: #ffffff;
+    padding: 18px 24px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    margin-bottom: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.ai-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+}
+.ai-card h4 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.ai-card p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* -------------------------
+   Suggested Questions Card
+------------------------- */
+.suggested-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transition: all 0.3s ease;
+}
+.suggested-card:hover {
+    background-color: #f0f8ff;
+    transform: scale(1.03);
+}
+
+/* -------------------------
+   Analytics Panels
+------------------------- */
+.analytics-panel {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 18px 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* -------------------------
+   PDF Preview Box
+------------------------- */
+.pdf-preview {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    margin-bottom: 18px;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}

@@ -1,0 +1,3 @@
+2025-11-26 15:10:40,437 - Updated student_id=101, date=2025-11-26, status=medical, note=Sick with fever
+2025-11-26 15:10:40,438 - Updated student_id=102, date=2025-11-26, status=family, note=Family emergency
+2025-11-27 12:02:49,497 - Updated student_id=3, date=2025-11-27, status=medical, note=PDF processing failed: Unable to get page count. Is poppler installed and in PATH?
