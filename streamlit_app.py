@@ -49,39 +49,59 @@ config_col = db["config"]
 # -------------------------
 os.makedirs("pdfs", exist_ok=True)
 
-# -------------------------
-# Sidebar - Student & Settings with Icons
-# -------------------------
+# Sidebar - Premium Student Info
+st.sidebar.markdown('<h3 style="text-align:center;">Student Info</h3>', unsafe_allow_html=True)
 
-st.sidebar.markdown('<h3>Student Information</h3>', unsafe_allow_html=True)
+# Main Student Icon with Glow
+st.sidebar.markdown("""
+<div style="text-align:center; margin-bottom:20px;">
+    <img src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png' 
+         style='width:120px; height:120px; border-radius:50%; transition: all 0.3s;'
+         title="Student Icon"
+         onmouseover="this.style.transform='scale(1.12)'; this.style.boxShadow='0 0 25px #00a8ff';"
+         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';" />
+</div>
+""", unsafe_allow_html=True)
+
+# Function to add field with icon and tooltip
+def sidebar_field(icon_url, label, widget_func, **kwargs):
+    col1, col2 = st.sidebar.columns([1, 4])
+    with col1:
+        st.image(icon_url, width=30, use_column_width=False, output_format="png", clamp=False)
+    with col2:
+        return widget_func(label, **kwargs)
 
 # Student ID
-col1, col2 = st.sidebar.columns([1, 4])
-with col1:
-    st.image("https://cdn-icons-png.flaticon.com/512/1087/1087925.png", width=30, output_format="png")
-with col2:
-    student_id = st.number_input("Student ID", min_value=1, step=1, key="id_input", help="Student ID")
+student_id = sidebar_field(
+    "https://cdn-icons-png.flaticon.com/512/1087/1087925.png",
+    "Student ID",
+    st.number_input,
+    min_value=1, step=1, key="id_input", help="Student ID"
+)
 
 # Student Name
-col1, col2 = st.sidebar.columns([1, 4])
-with col1:
-    st.image("https://cdn-icons-png.flaticon.com/512/747/747376.png", width=30)
-with col2:
-    student_name = st.text_input("Student Name", key="name_input", help="Student Name")
+student_name = sidebar_field(
+    "https://cdn-icons-png.flaticon.com/512/747/747376.png",
+    "Student Name",
+    st.text_input,
+    key="name_input", help="Student Name"
+)
 
 # Age
-col1, col2 = st.sidebar.columns([1, 4])
-with col1:
-    st.image("https://cdn-icons-png.flaticon.com/512/2910/2910766.png", width=30)
-with col2:
-    age = st.number_input("Student Age", min_value=1, max_value=120, step=1, value=10, key="age_input", help="Student Age")
+age = sidebar_field(
+    "https://cdn-icons-png.flaticon.com/512/2910/2910766.png",
+    "Student Age",
+    st.number_input,
+    min_value=1, max_value=120, step=1, value=10, key="age_input", help="Student Age"
+)
 
 # Attendance Date
-col1, col2 = st.sidebar.columns([1, 4])
-with col1:
-    st.image("https://cdn-icons-png.flaticon.com/512/2921/2921222.png", width=30)
-with col2:
-    attendance_date = st.date_input("Attendance Date", value=dt_date.today(), key="date_input", help="Attendance Date")
+attendance_date = sidebar_field(
+    "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
+    "Attendance Date",
+    st.date_input,
+    value=dt_date.today(), key="date_input", help="Attendance Date"
+)
 
 # Reason / Doctor Note
 message = st.sidebar.text_area("Reason / Doctor Note (Optional)")
