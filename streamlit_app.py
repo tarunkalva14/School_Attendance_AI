@@ -72,7 +72,7 @@ def sidebar_field(icon_url, label, widget_func, **kwargs):
         return widget_func(label, **kwargs)
 
 # -------------------------
-# Student Info Sidebar (Perfect, Warning-Free)
+# Student Info Sidebar (Warning-Free)
 # -------------------------
 
 # Track last selected student ID to detect changes
@@ -109,13 +109,12 @@ if st.session_state["last_student_id"] != student_id:
         st.session_state["age_input"] = 10
         st.session_state["date_input"] = dt_date.today()
 
-# Student Name
+# Student Name (no value=, let session_state handle it)
 student_name = sidebar_field(
     "https://cdn-icons-png.flaticon.com/512/747/747376.png",
     "Student Name",
     st.text_input,
     key="name_input",
-    value=st.session_state.get("name_input", ""),
     help="Student Name"
 )
 
@@ -126,7 +125,6 @@ age = sidebar_field(
     st.number_input,
     min_value=1, max_value=120, step=1,
     key="age_input",
-    value=st.session_state.get("age_input", 10),
     help="Student Age"
 )
 
@@ -136,10 +134,8 @@ attendance_date = sidebar_field(
     "Attendance Date",
     st.date_input,
     key="date_input",
-    value=st.session_state.get("date_input", dt_date.today()),
     help="Attendance Date"
 )
-
 
 # Reason / Doctor Note
 message = st.sidebar.text_area("Reason / Doctor Note (Optional)")
@@ -156,13 +152,13 @@ note_type_option = None
 if status_override == "Absent" or status_override == "Auto Detect":
     note_type_option = st.sidebar.selectbox("Generate Doctor Note PDF Type", ["None", "Medical", "Family"])
     if st.sidebar.button("Generate Doctor Note PDF"):
-        if student_name.strip() == "":
+        if st.session_state.get("name_input", "").strip() == "":
             st.sidebar.error("Please enter student name!")
         elif note_type_option != "None":
-            file_name = f"{student_name.replace(' ', '_')}_note.pdf"
+            file_name = f"{st.session_state.get('name_input', '').replace(' ', '_')}_note.pdf"
             create_pdf(
                 file_name,
-                student_name=student_name,
+                student_name=st.session_state.get("name_input", ""),
                 note_type=note_type_option.lower(),
                 attendance_date=attendance_date
             )
@@ -196,7 +192,7 @@ def display_ai_card(answer_text):
 def display_suggested_card(question_text, key, student_id):
     if st.button(question_text, key=key):
         try:
-            resp = get_attendance_answer(student_id, question_text, student_name=student_name)
+            resp = get_attendance_answer(student_id, question_text, student_name=st.session_state.get("name_input", ""))
             st.markdown(f'<div class="suggested-card">{resp}</div>', unsafe_allow_html=True)
         except Exception as e:
             st.error(f"AI processing failed: {str(e)}")
@@ -230,10 +226,10 @@ with tabs[0]:
                 pdf_path = os.path.join("pdfs", pdf_file.name)
                 with open(pdf_path, "wb") as f:
                     f.write(pdf_file.getbuffer())
-            elif status_override == "Absent" and note_type_option != "None" and os.path.exists(f"pdfs/{student_name.replace(' ', '_')}_note.pdf"):
-                pdf_path = f"pdfs/{student_name.replace(' ', '_')}_note.pdf"
+            elif status_override == "Absent" and note_type_option != "None" and os.path.exists(f"pdfs/{st.session_state.get('name_input', '').replace(' ', '_')}_note.pdf"):
+                pdf_path = f"pdfs/{st.session_state.get('name_input', '').replace(' ', '_')}_note.pdf"
 
-            if student_name.strip() == "":
+            if st.session_state.get("name_input", "").strip() == "":
                 st.error("Please enter student name!")
             else:
                 if isinstance(attendance_date, datetime):
@@ -337,7 +333,7 @@ with tabs[3]:
     else:
         df = pd.DataFrame(records)
         if 'student_name' not in df.columns:
-            df['student_name'] = student_name if student_name else ""
+            df['student_name'] = st.session_state.get("name_input", "")
         if 'age' not in df.columns:
             df['age'] = age if age else None
 
